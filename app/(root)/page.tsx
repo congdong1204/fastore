@@ -1,7 +1,5 @@
-import { Button } from '@/components/ui/button'
-
-const HomePage = () => {
-  return <Button>Fashion Store</Button>
+const HomePage = async () => {
+  return <>Fashion Store</>
 }
 
 export default HomePage
