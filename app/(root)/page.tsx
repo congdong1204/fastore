@@ -1,10 +1,12 @@
 import ProductList from '@/components/shared/product/product-list'
-import sampleData from '@/db/sample-data'
+import { getLatestProducts } from '@/lib/actions/product.action'
 
 const HomePage = async () => {
+  const products = await getLatestProducts()
+
   return (
     <>
-      <ProductList data={sampleData} title="Newest Arrivals" limit={5} />
+      <ProductList data={products} title="Newest Arrivals" />
     </>
   )
 }
