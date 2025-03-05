@@ -50,7 +50,7 @@ const UserButton = async () => {
             </div>
           </DropdownMenuLabel>
           <DropdownMenuItem className="p-0 mb-1">
-            <form action={signOutUser}>
+            <form action={signOutUser} className="w-full">
               <Button
                 type="submit"
                 variant="ghost"

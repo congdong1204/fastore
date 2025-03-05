@@ -33,7 +33,7 @@ export const signInFormSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
   password: z
     .string()
-    .min(5, { message: 'Password must be at least 5 characters' }),
+    .min(6, { message: 'Password must be at least 6 characters' }),
 })
 
 // Schema for signing up a user
@@ -43,10 +43,10 @@ export const signUpFormSchema = z
     email: z.string().email({ message: 'Invalid email address' }),
     password: z
       .string()
-      .min(5, { message: 'Password must be at least 5 characters' }),
+      .min(6, { message: 'Password must be at least 6 characters' }),
     confirmPassword: z
       .string()
-      .min(5, { message: 'Confirm password must be at least 5 characters' }),
+      .min(6, { message: 'Confirm password must be at least 6 characters' }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords do not match',
