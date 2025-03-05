@@ -2,17 +2,35 @@
 
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
-import { useState } from 'react'
 import { signInDefaultValues } from '@/lib/constants'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { useActionState } from 'react'
+import { signInWithCredentials } from '@/lib/actions/user.action'
+import { useFormStatus } from 'react-dom'
 
 const CredentialsSignInForm = () => {
-  const [email, setEmail] = useState(signInDefaultValues.email)
-  const [password, setPassword] = useState(signInDefaultValues.password)
+  const [data, action] = useActionState(signInWithCredentials, {
+    success: false,
+    message: '',
+  })
+
+  const SignInButton = () => {
+    const { pending } = useFormStatus()
+    return (
+      <Button
+        type="submit"
+        variant="default"
+        className="w-full"
+        disabled={pending}
+      >
+        {pending ? 'Signing In...' : 'Sign In'}
+      </Button>
+    )
+  }
 
   return (
-    <form>
+    <form action={action}>
       <div className="space-y-6">
         <div>
           <Label htmlFor="email">Email</Label>
@@ -23,7 +41,6 @@ const CredentialsSignInForm = () => {
             autoComplete="email"
             required
             defaultValue={signInDefaultValues.email}
-            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
@@ -35,17 +52,17 @@ const CredentialsSignInForm = () => {
             autoComplete="password"
             required
             defaultValue={signInDefaultValues.password}
-            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div>
-          <Button type="submit" variant="default" className="w-full">
-            Sign In
-          </Button>
+          <SignInButton />
         </div>
+        {data && !data.success && (
+          <div className="text-destructive text-center">{data.message}</div>
+        )}
         <div className="text-sm text-center text-muted-foreground">
           Don&apos;t have an account?{' '}
-          <Link href="/sign-up" className="text-primary">
+          <Link href="/sign-up" target="_self" className="link">
             Sign up
           </Link>
         </div>
